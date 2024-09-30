@@ -1,7 +1,29 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react';
+
+import { Link } from 'react-router-dom';
+
+import useLogin from '../../hooks/useLogin';
 
 const Login = () => {
+    const { login, loading } = useLogin();
+
+    const [input, setInput] = useState({
+        email: "",
+        password: ""
+    });
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        await login(input);
+
+        setInput({
+            email: "",
+            password: ""
+        });
+
+    }
+
     return (
         <div className="flex min-h-screen items-center justify-center bg-gray-100">
             <div className="bg-white shadow-xl p-7 relative flex flex-col rounded-xl bg-transparent bg-clip-border text-gray-700">
@@ -11,11 +33,14 @@ const Login = () => {
                 <p className="mt-1 block font-sans text-base font-normal leading-relaxed text-gray-700 antialiased">
                     Enter your details to login.
                 </p>
-                <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+                <form onSubmit={handleSubmit} className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
                     <div className="mb-4 flex flex-col gap-6">
                         <div className="relative h-11 w-full min-w-[200px]">
                             <input
-                                className="peer h-full w-full rounded-md border border-blue-gray-200 bg-transparent px-3 py-3 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-pink-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                                value={input.email}
+                                onChange={(e) => setInput({ ...input, email: e.target.value })}
+                                type="email"
+                                className="h-full w-full rounded-md border border-blue-gray-200 bg-transparent px-3 py-3 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-pink-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" "
                                 required
                             />
@@ -25,6 +50,8 @@ const Login = () => {
                         </div>
                         <div className="relative h-11 w-full min-w-[200px]">
                             <input
+                                value={input.password}
+                                onChange={(e) => setInput({ ...input, password: e.target.value })}
                                 type="password"
                                 className="peer h-full w-full rounded-md border border-blue-gray-200 bg-transparent px-3 py-3 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-pink-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" "
@@ -40,7 +67,7 @@ const Login = () => {
                         type="submit"
                         data-ripple-light="true"
                     >
-                        Login
+                        {loading ? "Loading..." : "Login"}
                     </button>
                     <p className="mt-4 block text-center font-sans text-base font-normal leading-relaxed text-gray-700 antialiased">
                         No have an account? {" "}

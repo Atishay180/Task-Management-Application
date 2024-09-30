@@ -1,10 +1,16 @@
 import React, { useState } from 'react'
 import { IoSearchSharp } from 'react-icons/io5'
 import { RiLogoutBoxLine } from "react-icons/ri";
+import useLogout from '../../hooks/useLogout';
 
 
 const Navbar = () => {
+    const {loading, logout} = useLogout();
     const [search, setSearch] = useState('')
+
+    const handleLogout = async () => {
+        await logout();
+    }
 
     return (
         <div className='w-full flex justify-between items-center h-14 p-2 bg-white'>
@@ -27,7 +33,9 @@ const Navbar = () => {
 
 
             <div className='flex items-start p-2'>
-                <RiLogoutBoxLine className='text-3xl text-black cursor-pointer hover:scale-95' />
+                {loading ? "Loading..." :
+                    <RiLogoutBoxLine onClick={handleLogout} className='text-3xl text-black cursor-pointer hover:scale-95' />
+                    }
             </div>
         </div>
     )

@@ -189,4 +189,33 @@ const deleteTask = async (req, res) => {
     }
 };
 
-export { createTask, updateTask, deleteTask };
+const getAllTasks = async (req, res) => {
+    try {
+        const userId = req.user._id;
+
+        const user = await User.findById(userId);
+
+        const tasks = await Task.find({
+            $or: [
+                { _id: { $in: user.myTasks } },
+                { _id: { $in: user.assignedTasks } }
+            ]
+        });
+
+        if (!tasks) {
+            return res
+                .status(400)
+                .json({ message: "No tasks found" })
+        }
+
+        return res
+            .status(200)
+            .json({ tasks });
+
+    } catch (error) {
+        console.log("Error in getAllTasks controller: ", error.message);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+
+export { createTask, updateTask, deleteTask, getAllTasks };

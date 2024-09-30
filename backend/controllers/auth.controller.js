@@ -16,7 +16,7 @@ const register = async (req, res) => {
         if (!emailRegex.test(email)) {
             return res
                 .status(400)
-                .json({ error: "Invalid email format" })
+                .json({ message: "Invalid email format" })
         }
 
         if (password !== confirmPassword) {

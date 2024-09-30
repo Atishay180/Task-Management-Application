@@ -7,15 +7,12 @@ const TaskList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const tasksPerPage = 5;
 
-    // Calculate the total number of pages
     const totalPages = Math.ceil(tasks.length / tasksPerPage);
 
-    // Get the tasks for the current page
     const indexOfLastTask = currentPage * tasksPerPage;
     const indexOfFirstTask = indexOfLastTask - tasksPerPage;
     const currentTasks = tasks.slice(indexOfFirstTask, indexOfLastTask);
 
-    // Function to change page
     const paginate = (pageNumber) => {
         if (pageNumber >= 1 && pageNumber <= totalPages) {
             setCurrentPage(pageNumber);
@@ -47,7 +44,7 @@ const TaskList = () => {
                 />
             </div>
 
-            {/* Scrollable Task List */}
+            {/* Task List */}
             <div className="bg-gray-100 rounded-lg h-[300px] md:h-[400px] flex-grow overflow-y-auto">
                 {currentTasks.map((task, index) => (
                     <div key={index} className="my-3 bg-white rounded-xl shadow-md overflow-hidden p-4">

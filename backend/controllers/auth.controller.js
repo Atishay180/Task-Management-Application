@@ -127,4 +127,33 @@ const logout = async (req, res) => {
     }
 }
 
-export { register, login, logout };
+const getUser = async (req, res) => {
+    try {
+        const email = req.body.email;
+
+        if (!email) {
+            return res
+                .status(400)
+                .json({ message: "Please provide email" })
+        }
+        const user = await User.findOne({ email }).select("-password");
+
+        if (!user) {
+            return res
+                .status(400)
+                .json({ message: "User does not exist" })
+        }
+
+        return res
+            .status(200)
+            .json({ user })
+
+    } catch (error) {
+        console.log("Error in getUser controller: ", error.message)
+        return res
+            .status(500)
+            .json({ error: "Internal Server Error" })
+    }
+}
+
+export { register, login, logout, getUser };

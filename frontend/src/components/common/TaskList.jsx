@@ -1,9 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
-import Dropdown from '../../dropdown/Dropdown';
-import useFilterTasks from '../../hooks/useFilterTasks';
-import { useAuthContext } from '../../context/AuthContext';
-
+import React from 'react';
 const TaskList = ({currentTasks}) => {
 
     return (

@@ -8,6 +8,7 @@ export const useAuthContext = () => {
 export const AuthContextProvider = ({ children }) => {
     const [authUser, setAuthUser] = useState(JSON.parse(localStorage.getItem("User")) || null)
     const [selectedFilter, setSelectedFilter] = useState("All")
+    const [sidebarBtn, setSidebarBtn] = useState("dashboard")
 
     return <AuthContext.Provider
         value={{
@@ -15,7 +16,10 @@ export const AuthContextProvider = ({ children }) => {
             setAuthUser,
 
             selectedFilter,
-            setSelectedFilter
+            setSelectedFilter,
+
+            sidebarBtn,
+            setSidebarBtn
         }}
     >
         {children}

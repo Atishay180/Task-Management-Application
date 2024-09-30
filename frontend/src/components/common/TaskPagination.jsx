@@ -50,7 +50,7 @@ const TaskPagination = () => {
 
                 <p className="text-gray-600">Page {currentPage} of {totalPages}</p>
 
-                <Dropdown name="Filter by" options={['All', 'To do', 'In Progess', 'Completed', 'High', 'Medium', 'Low']} />
+                <Dropdown name="Filter by" options={['All', 'To Do', 'In Progress', 'Completed', 'High', 'Medium', 'Low']} />
 
                 <FaArrowRight
                     onClick={() => currentPage < totalPages && paginate(currentPage + 1)}

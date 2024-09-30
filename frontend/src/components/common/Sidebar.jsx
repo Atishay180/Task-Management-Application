@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { NavLink } from "react-router-dom"
 
 import { IoIosAddCircle } from "react-icons/io";
@@ -9,7 +9,11 @@ import { FaUser } from "react-icons/fa";
 import { useAuthContext } from '../../context/AuthContext';
 
 const Sidebar = () => {
-    const { authUser } = useAuthContext();
+    const { authUser, sidebarBtn, setSidebarBtn } = useAuthContext();
+
+    const handleBtn = (btn) => () => {
+        setSidebarBtn(btn);
+    }
 
     return (
         <div className="flex h-screen w-2/12 flex-col justify-between border-e bg-white">
@@ -20,7 +24,7 @@ const Sidebar = () => {
 
                 <ul className="mt-6 space-y-3 flex flex-col items-between">
                     <li>
-                        <NavLink className='flex justify-evenly items-center rounded-lg bg-gray-100 px-4 py-2 font-medium text-gray-700 hover:bg-gray-100'>
+                        <NavLink to="/" onClick={handleBtn('dashboard')} className={`flex justify-evenly items-center rounded-lg px-4 py-2 font-medium text-gray-700 ${sidebarBtn === 'dashboard' ? 'bg-gray-100' : 'bg-white'} hover:bg-gray-100`}>
                             <MdDashboard className='text-3xl text-primary' />
 
                             <h2 className="w-24 hidden md:block">
@@ -30,7 +34,7 @@ const Sidebar = () => {
                     </li>
 
                     <li>
-                        <NavLink className='flex justify-evenly items-center rounded-lg bg-white px-4 py-2 font-medium text-gray-700 hover:bg-gray-100'>
+                        <NavLink to="/create" onClick={handleBtn('create')} className={`flex justify-evenly items-center rounded-lg px-4 py-2 font-medium text-gray-700 ${sidebarBtn === 'create' ? 'bg-gray-100' : 'bg-white'} hover:bg-gray-100`}>
                             <IoIosAddCircle className='text-3xl text-green-500' />
 
                             <h2 className="w-24 hidden md:block">
@@ -40,7 +44,7 @@ const Sidebar = () => {
                     </li>
 
                     <li>
-                        <NavLink className='flex justify-evenly items-center rounded-lg bg-white px-4 py-2 font-medium text-gray-700 hover:bg-gray-100'>
+                        <NavLink to="/edit" onClick={handleBtn('edit')} className={`flex justify-evenly items-center rounded-lg px-4 py-2 font-medium text-gray-700 ${sidebarBtn === 'edit' ? 'bg-gray-100' : 'bg-white'} hover:bg-gray-100`}>
                             <RiEditFill className='text-3xl text-blue-500' />
 
                             <h2 className="w-24 hidden md:block">
@@ -50,7 +54,7 @@ const Sidebar = () => {
                     </li>
 
                     <li>
-                        <NavLink className='flex justify-evenly items-center rounded-lg bg-white px-4 py-2 font-medium text-gray-700 hover:bg-gray-100'>
+                        <NavLink to="/remove" onClick={handleBtn('remove')} className={`flex justify-evenly items-center rounded-lg px-4 py-2 font-medium text-gray-700 ${sidebarBtn === 'remove' ? 'bg-gray-100' : 'bg-white'} hover:bg-gray-100`}>
                             <MdDeleteForever className='text-3xl text-red-500' />
 
                             <h2 className="w-24 hidden md:block">

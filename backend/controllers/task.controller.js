@@ -4,20 +4,22 @@ import { User } from "../models/user.model.js";
 
 const createTask = async (req, res) => {
     try {
-        const { title, description, dueDate, status, assignedUsers, priority } = req.body;
+        const { title, description, dueDate, assignedUsers, priority } = req.body;
 
-        if (!title || !description || !dueDate || !status || !priority) {
+        if (!title || !description || !dueDate || !priority) {
             return res
                 .status(400)
                 .json({ error: "Please fill all the fields" })
         }
+
+        const status = 'To Do'  
 
         const taskExists = await Task.findOne({ title });
 
         if (taskExists) {
             return res
                 .status(400)
-                .json({ error: "Task already exists" })
+                .json({ message: "Task already exists" })
         }
 
         const task = new Task({
@@ -39,14 +41,14 @@ const createTask = async (req, res) => {
         if (!addTaskToAdmin) {
             return res
                 .status(400)
-                .json({ error: "Task not created" })
+                .json({ message: "Task not created" })
         }
 
         // Add task to assigned users
         if (assignedUsers && assignedUsers.length > 0) {
             await User.updateMany(
-                { _id: { $in: assignedUsers } }, // Update all users who are assigned this task
-                { $push: { assignedTasks: task._id } } // Push the task to their 'assignedTasks' array
+                { _id: { $in: assignedUsers } },
+                { $push: { assignedTasks: task._id } } 
             );
         }
 
@@ -66,7 +68,7 @@ const createTask = async (req, res) => {
         console.log("Error in createTask controller: ", error.message)
         return res
             .status(500)
-            .json({ error: "Internal Server Error" })
+            .json({ message: "Internal Server Error" })
     }
 };
 
@@ -79,7 +81,7 @@ const updateTask = async (req, res) => {
         if (!taskId) {
             return res
                 .status(400)
-                .json({ error: "Task ID is required" })
+                .json({ message: "Task ID is required" })
         }
 
         const user = await User.findById(userId);
@@ -87,7 +89,7 @@ const updateTask = async (req, res) => {
         if (!user.myTasks.includes(taskId)) {
             return res
                 .status(400)
-                .json({ error: "You cannot edit the task since you are not admin of this task" })
+                .json({ message: "You cannot edit the task since you are not admin of this task" })
         }
 
         const updatedTask = {};
@@ -98,7 +100,7 @@ const updateTask = async (req, res) => {
             if (isExists) {
                 return res
                     .status(400)
-                    .json({ error: "Title must be unique" })
+                    .json({ message: "Title must be unique" })
             }
 
             updatedTask.title = title;
@@ -118,7 +120,7 @@ const updateTask = async (req, res) => {
         if (!task) {
             return res
                 .status(400)
-                .json({ error: "Task not updated" })
+                .json({ message: "Task not updated" })
         }
 
         return res
@@ -129,7 +131,7 @@ const updateTask = async (req, res) => {
         console.log("Error in updateTask controller: ", error.message)
         return res
             .status(500)
-            .json({ error: "Internal Server Error" })
+            .json({ message: "Internal Server Error" })
     }
 };
 
@@ -141,7 +143,7 @@ const deleteTask = async (req, res) => {
         if (!taskId) {
             return res
                 .status(400)
-                .json({ error: "Task ID is required" })
+                .json({ message: "Task ID is required" })
         }
 
         const user = await User.findById(userId);
@@ -149,7 +151,7 @@ const deleteTask = async (req, res) => {
         if (!user.myTasks.includes(taskId)) {
             return res
                 .status(400)
-                .json({ error: "You cannot delete the task since you are not admin of this task" })
+                .json({ message: "You cannot delete the task since you are not admin of this task" })
         }
 
         const task = await Task.findByIdAndDelete(taskId);
@@ -157,7 +159,7 @@ const deleteTask = async (req, res) => {
         if (!task) {
             return res
                 .status(400)
-                .json({ error: "Task not deleted" })
+                .json({ message: "Task not deleted" })
         }
 
         // Remove task from admin user
@@ -168,7 +170,7 @@ const deleteTask = async (req, res) => {
         if (!removeTaskFromAdmin) {
             return res
                 .status(400)
-                .json({ error: "Task not deleted" })
+                .json({ message: "Task not deleted" })
         }
 
         // Remove task from assigned users
@@ -185,7 +187,7 @@ const deleteTask = async (req, res) => {
         console.log("Error in deleteTask controller: ", error.message)
         return res
             .status(500)
-            .json({ error: "Internal Server Error" })
+            .json({ message: "Internal Server Error" })
     }
 };
 
@@ -214,7 +216,9 @@ const getAllTasks = async (req, res) => {
 
     } catch (error) {
         console.log("Error in getAllTasks controller: ", error.message);
-        return res.status(500).json({ error: "Internal Server Error" });
+        return res
+            .status(500)
+            .json({ message: "Internal Server Error" });
     }
 };
 
@@ -255,10 +259,12 @@ const filterTasks = async (req, res) => {
                 ],
                 status: selectedFilter
             }).populate("assignedUsers", "fullName email");
-        } 
+        }
 
         else {
-            return res.status(400).json({ message: "Task Not found" });
+            return res
+                .status(400)
+                .json({ message: "Task Not found" });
         }
 
         return res
@@ -266,7 +272,9 @@ const filterTasks = async (req, res) => {
             .json({ tasks });
     } catch (error) {
         console.log("Error in filterTasks controller: ", error.message);
-        return res.status(500).json({ error: "Internal Server Error" });
+        return res
+            .status(500)
+            .json({ message: "Internal Server Error" });
     }
 };
 

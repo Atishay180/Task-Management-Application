@@ -5,6 +5,7 @@ import Navbar from '../../components/common/Navbar';
 import Tasks from '../../components/common/Tasks';
 import TaskList from '../../components/common/TaskList';
 import CreateTask from '../../components/crud/CreateTask';
+import TaskPagination from '../../components/common/TaskPagination';
 
 const Home = () => {
   return (
@@ -16,7 +17,7 @@ const Home = () => {
         <Navbar />
 
         <Tasks />
-        <TaskList />
+        <TaskPagination />
 
         {/* <CreateTask /> */}
       </div>

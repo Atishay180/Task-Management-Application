@@ -218,4 +218,57 @@ const getAllTasks = async (req, res) => {
     }
 };
 
-export { createTask, updateTask, deleteTask, getAllTasks };
+const filterTasks = async (req, res) => {
+    try {
+        const selectedFilter = req.body.selectedFilter;
+        const userId = req.user._id;
+
+        const user = await User.findById(userId);
+
+        let tasks = [];
+
+        if (selectedFilter === "All") {
+            tasks = await Task.find({
+                $or: [
+                    { _id: { $in: user.myTasks } },
+                    { _id: { $in: user.assignedTasks } }
+                ]
+            }).populate("assignedUsers", "fullName email");
+        }
+
+        // Filter by priority
+        else if (["High", "Medium", "Low"].includes(selectedFilter)) {
+            tasks = await Task.find({
+                $or: [
+                    { _id: { $in: user.myTasks } },
+                    { _id: { $in: user.assignedTasks } }
+                ],
+                priority: selectedFilter
+            }).populate("assignedUsers", "fullName email");
+        }
+        // Filter by status
+        else if (["To Do", "In Progress", "Completed"].includes(selectedFilter)) {
+            tasks = await Task.find({
+                $or: [
+                    { _id: { $in: user.myTasks } },
+                    { _id: { $in: user.assignedTasks } }
+                ],
+                status: selectedFilter
+            }).populate("assignedUsers", "fullName email");
+        } 
+
+        else {
+            return res.status(400).json({ message: "Task Not found" });
+        }
+
+        return res
+            .status(200)
+            .json({ tasks });
+    } catch (error) {
+        console.log("Error in filterTasks controller: ", error.message);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+
+
+export { createTask, updateTask, deleteTask, getAllTasks, filterTasks };

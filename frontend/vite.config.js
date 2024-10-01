@@ -8,8 +8,8 @@ export default defineConfig({
     port: 3000,
     proxy: {
       "/api": {
-        target: "https://task-management-application-z7kb.onrender.com",
-        changeOrigin: true
+        // target: "http://localhost:5000",
+        target: import.meta.env.VITE_API_URL,
       }
     }
   },

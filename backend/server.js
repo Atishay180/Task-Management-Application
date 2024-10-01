@@ -11,8 +11,10 @@ import taskRoute from "./routes/task.route.js";
 
 dotenv.config();
 
-app.use(cors());
 const app = express();
+
+app.use(cors());
+
 const __dirname = path.resolve();
 const PORT = process.env.PORT || 5000;
 

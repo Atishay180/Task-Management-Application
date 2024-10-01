@@ -2,11 +2,11 @@
   "name": "task-management-application",
   "version": "1.0.0",
   "description": "a complete task management application developed using MERN STACK",
-  "main": "backend/server.js",
+  "main": "server.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon backend/server.js",
     "start": "cross-env NODE_ENV=production node backend/server.js",
-    "build": "npm run build --prefix frontend"
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "keywords": [],
   "author": "Atishay Jain",

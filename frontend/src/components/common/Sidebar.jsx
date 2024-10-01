@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from "react-router-dom"
 
-// import { IoIosAddCircle } from "react-icons/io";
+import { IoIosAddCircle } from "react-icons/io";
 import { MdDashboard } from "react-icons/md";
 import { RiEditFill } from "react-icons/ri";
 import { MdDeleteForever } from "react-icons/md";
@@ -35,7 +35,7 @@ const Sidebar = () => {
 
                     <li>
                         <NavLink to="/create" onClick={handleBtn('create')} className={`flex justify-evenly items-center rounded-lg px-4 py-2 font-medium text-gray-700 ${sidebarBtn === 'create' ? 'bg-gray-100' : 'bg-white'} hover:bg-gray-100`}>
-                            {/* <IoIosAddCircle className='text-3xl text-green-500' /> */}
+                            <IoIosAddCircle className='text-3xl text-green-500' />
 
                             <h2 className="w-24 hidden md:block">
                                 Create Task

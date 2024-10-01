@@ -33,8 +33,10 @@ export const AuthContextProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        getTasks();
-    }, []);
+        if (authUser) {
+            getTasks();
+        }
+    }, [authUser]);
 
 
     return <AuthContext.Provider

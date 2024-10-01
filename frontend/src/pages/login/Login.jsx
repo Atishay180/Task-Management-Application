@@ -25,7 +25,7 @@ const Login = () => {
     }
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gray-100">
+        <div className="flex min-h-screen w-full items-center justify-center bg-gray-100">
             <div className="bg-white shadow-xl p-7 relative flex flex-col rounded-xl bg-transparent bg-clip-border text-gray-700">
                 <h4 className="block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
                     Login

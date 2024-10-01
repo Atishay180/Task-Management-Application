@@ -19,7 +19,7 @@ const App = () => {
 
   return (
     <div className='flex bg-gray-100'>
-      <Sidebar />
+      {authUser && <Sidebar />}
       <Routes>
         <Route path="/" element={authUser ? <Home /> : <Navigate to="login" />} />
         <Route path="/signup" element={authUser ? <Navigate to="/" /> : <SignUp />} />

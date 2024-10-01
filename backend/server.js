@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 import connectMongoDB from "./db/connectMongoDB.js";
 
@@ -10,6 +11,7 @@ import taskRoute from "./routes/task.route.js";
 
 dotenv.config();
 
+app.use(cors());
 const app = express();
 const PORT = process.env.PORT || 5000;
 const __dirname = path.resolve();

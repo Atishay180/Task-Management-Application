@@ -14,7 +14,7 @@ const PriorityDropdown = ({ onSelect, options, initialValue }) => {
     };
 
     return (
-        <div className="relative inline-block text-left">
+        <div className="relative z-10 inline-block text-left">
             <button
                 type='button'
                 onClick={toggleDropdown}

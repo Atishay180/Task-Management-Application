@@ -12,7 +12,7 @@ const createTask = async (req, res) => {
                 .json({ error: "Please fill all the fields" })
         }
 
-        const status = 'To Do'  
+        const status = 'To Do'
 
         const taskExists = await Task.findOne({ title });
 
@@ -48,7 +48,7 @@ const createTask = async (req, res) => {
         if (assignedUsers && assignedUsers.length > 0) {
             await User.updateMany(
                 { _id: { $in: assignedUsers } },
-                { $push: { assignedTasks: task._id } } 
+                { $push: { assignedTasks: task._id } }
             );
         }
 
@@ -79,30 +79,26 @@ const updateTask = async (req, res) => {
         const userId = req.user._id;
 
         if (!taskId) {
-            return res
-                .status(400)
-                .json({ message: "Task ID is required" })
+            return res.status(400).json({ message: "Task ID is required" });
         }
 
         const user = await User.findById(userId);
+        const taskExists = await Task.findById(taskId); // Check if task exists
+
+        if (!taskExists) {
+            return res.status(404).json({ message: "Task not found" });
+        }
 
         if (!user.myTasks.includes(taskId)) {
-            return res
-                .status(400)
-                .json({ message: "You cannot edit the task since you are not admin of this task" })
+            return res.status(403).json({ message: "You cannot edit this task" });
         }
 
         const updatedTask = {};
-
         if (title) {
             const isExists = await Task.findOne({ title });
-
             if (isExists) {
-                return res
-                    .status(400)
-                    .json({ message: "Title must be unique" })
+                return res.status(400).json({ message: "Title must be unique" });
             }
-
             updatedTask.title = title;
         }
 
@@ -111,27 +107,20 @@ const updateTask = async (req, res) => {
         if (status) updatedTask.status = status;
         if (priority) updatedTask.priority = priority;
 
-        const task = await Task.findByIdAndUpdate(
-            taskId,
-            { $set: updatedTask },
-            { new: true }
-        )
-
-        if (!task) {
-            return res
-                .status(400)
-                .json({ message: "Task not updated" })
+        if (Object.keys(updatedTask).length === 0) { // Check if there's nothing to update
+            return res.status(400).json({ message: "No fields to update" });
         }
 
-        return res
-            .status(200)
-            .json({ message: "Task updated successfully" });
+        const task = await Task.findByIdAndUpdate(taskId, { $set: updatedTask }, { new: true });
 
+        if (!task) {
+            return res.status(400).json({ message: "Task not updated" });
+        }
+
+        return res.status(200).json({ message: "Task updated successfully" });
     } catch (error) {
-        console.log("Error in updateTask controller: ", error.message)
-        return res
-            .status(500)
-            .json({ message: "Internal Server Error" })
+        console.log("Error in updateTask controller: ", error.message);
+        return res.status(500).json({ message: "Internal Server Error" });
     }
 };
 
@@ -202,7 +191,7 @@ const getAllTasks = async (req, res) => {
                 { _id: { $in: user.myTasks } },
                 { _id: { $in: user.assignedTasks } }
             ]
-        });
+        }).populate("assignedUsers", "fullName email");
 
         if (!tasks) {
             return res
@@ -278,5 +267,28 @@ const filterTasks = async (req, res) => {
     }
 };
 
+const getTask = async (req, res) => {
+    const taskId = req.params.id;
 
-export { createTask, updateTask, deleteTask, getAllTasks, filterTasks };
+    try {
+        const task = await Task.findById(taskId);
+
+        if (!task) {
+            return res
+                .status(400)
+                .json({ message: "Task not found" });
+        }
+
+        return res
+            .status(200)
+            .json({ task });
+    } catch (error) {
+        console.log("Error in getTask controller: ", error.message);
+        return res
+            .status(500)
+            .json({ message: "Internal Server Error" });
+
+    }
+}
+
+export { createTask, updateTask, deleteTask, getAllTasks, filterTasks, getTask };

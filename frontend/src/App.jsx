@@ -12,6 +12,7 @@ import Sidebar from './components/common/Sidebar'
 import CreateTask from './components/crud/CreateTask'
 import EditTask from './components/crud/EditTask'
 import RemoveTask from './components/crud/RemoveTask'
+import EditTaskCard from './components/common/EditTaskCard'
 
 const App = () => {
   const { authUser } = useAuthContext();
@@ -26,6 +27,7 @@ const App = () => {
 
         <Route path="/create" element={authUser ? <CreateTask /> : <Navigate to="login" />} />
         <Route path="/edit" element={authUser ? <EditTask /> : <Navigate to="login" />} />
+        <Route path="/:taskId" element={authUser ? <EditTaskCard /> : <Navigate to="login" />} />
         <Route path="/remove" element={authUser ? <RemoveTask /> : <Navigate to="login" />} />
       </Routes>
 

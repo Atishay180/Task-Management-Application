@@ -33,7 +33,8 @@ const TaskList = ({ currentTasks }) => {
                             <div className="mt-4">
                                 <p className="font-semibold text-gray-700">Assigned Users:</p>
                                 <ul className="list-disc list-inside">
-                                    {task.assignedUsers.map((user, userIndex) => (
+                                    {task.assignedUsers.length === 0 && (<li>0</li>)}
+                                    {task.assignedUsers.length > 0 && task.assignedUsers.map((user, userIndex) => (
                                         <li key={userIndex} className="text-gray-600">
                                             {user.fullName}
                                             {" "}

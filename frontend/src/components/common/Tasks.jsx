@@ -1,16 +1,12 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { FaTasks, FaRegListAlt } from "react-icons/fa";
 import { MdFileDownloadDone } from "react-icons/md";
 import { RiProgress3Line } from "react-icons/ri";
-import useTasks from '../../hooks/useTasks';
+import { useAuthContext } from '../../context/AuthContext';
 
 
 const Tasks = () => {
-    const { tasks, getTasks } = useTasks();
-
-    useEffect(() => {
-        getTasks();
-    }, []);
+    const { tasks, loading } = useAuthContext();
 
     const totalTasks = tasks.length;
     const completedTasks = tasks.filter(task => task.status === 'Completed').length;

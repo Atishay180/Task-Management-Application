@@ -18,13 +18,14 @@ const useCreateTask = () => {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.message || 'Something went wrong');
+                toast.error(data.message || 'Something went wrong');
+                return;
             }
 
             toast.success(data.message || 'Task created successfully');
             return data;
         } catch (error) {
-            throw new Error(error.message || 'Something went wrong');
+            toast.error(error.message || 'Something went wrong');
         } finally {
             setLoading(false);
         }

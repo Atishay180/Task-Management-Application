@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { FiChevronDown } from 'react-icons/fi';
 
-const PriorityDropdown = ({onSelect, options}) => {
+const PriorityDropdown = ({ onSelect, options, initialValue }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedItem, setSelectedItem] = useState('High');
+    const [selectedItem, setSelectedItem] = useState(initialValue);
 
     const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -16,6 +16,7 @@ const PriorityDropdown = ({onSelect, options}) => {
     return (
         <div className="relative inline-block text-left">
             <button
+                type='button'
                 onClick={toggleDropdown}
                 className="inline-flex justify-between w-52 rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-200"
             >
@@ -30,6 +31,7 @@ const PriorityDropdown = ({onSelect, options}) => {
                     <div className="py-1">
                         {options.map((option, index) => (
                             <button
+                                type='button'
                                 key={index}
                                 onClick={() => handleSelect(option)}
                                 className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"

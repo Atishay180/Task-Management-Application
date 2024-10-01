@@ -74,15 +74,16 @@ const CreateTask = () => {
                 </div>
 
                 <form onSubmit={handleCreateUser} className="p-5">
-                    <div className="flex md:flex-row flex-col md:px-5 justify-between md:items-center">
+                    <div className="flex flex-wrap md:flex-row flex-col md:px-5 justify-between md:items-center">
 
                         {/* priority and due date */}
-                        <label htmlFor="full-name" className="text-xl">Priority : </label>
-                        <PriorityDropdown options={['High', 'Medium', 'Low']} onSelect={
-                            (priority) => setInput({ ...input, priority })
-                        } />
+                        <label className="text-xl">Priority : </label>
+                        <PriorityDropdown options={['High', 'Medium', 'Low']} 
+                        onSelect={(priority) => setInput({ ...input, priority })} 
+                        initialValue={input.priority}
+                        />
 
-                        <label htmlFor="full-name" className="text-xl mt-3 md:mt-0">Due Date : </label>
+                        <label htmlFor="full-name" className="text-xl mt-3 p-2 md:mt-0">Due Date : </label>
                         <input
                             value={input.dueDate}
                             onChange={(e) => setInput({ ...input, dueDate: e.target.value })}
@@ -160,17 +161,18 @@ const CreateTask = () => {
 
                         {/* right part: added users list */}
                         <div className='pr-16'>
-                            <label htmlFor="email-search" className="text-xl text-gray-600 font-semibold underline">Users Added: </label>
+                            {input.assignedUsers.length > 0 && <label htmlFor="email-search" className="text-xl text-gray-600 font-semibold underline">Users Added: </label>}
                             <ul>
                                 {input.assignedUsers.map((user, index) => (
                                     <li key={index} className="flex items-center justify-start py-1" >
                                         <CiCircleMinus
+                                        className='text-red-500 text-2xl mx-1 cursor-pointer hover:text-red-600'
                                             onClick={() => {
                                                 const newUsers = input.assignedUsers.filter((u) => u.email !== user.email);
                                                 setInput({ ...input, assignedUsers: newUsers })
                                             }
                                             }
-                                            className='text-2xl' /> {" "}
+                                            />
                                         <h1 className="font-semibold text-gray-600">{user.email}</h1>
                                     </li>
                                 ))}

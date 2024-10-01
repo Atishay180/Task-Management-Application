@@ -11,6 +11,7 @@ const TaskPagination = () => {
 
     useEffect(() => {
         filterTasks(selectedFilter);
+        setCurrentPage(1);
     }, [selectedFilter]);
 
     // Pagination

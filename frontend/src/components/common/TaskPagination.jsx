@@ -37,7 +37,7 @@ const TaskPagination = () => {
     }
 
     return (
-        <div className="flex flex-col px-8">
+        <div className="ml-44 md:ml-56 flex flex-col px-8 h-screen">
             {/* Heading */}
             <h1 className="text-2xl font-bold text-gray-800 mb-2">Your Tasks:</h1>
 

@@ -79,7 +79,7 @@ const DescriptionWithReadMore = ({ description }) => {
                 ref={descriptionRef}
                 value={description}
                 readOnly
-                className="w-full text-gray-600 rounded-lg"
+                className="w-full text-gray-600 rounded-lg focus:outline-none"
                 rows={isExpanded ? 6 : 2}
                 style={{ resize: 'none', overflow: 'hidden' }}
             />

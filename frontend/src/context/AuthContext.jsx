@@ -33,7 +33,9 @@ export const AuthContextProvider = ({ children }) => {
     };
 
     useEffect(() => {
+        if (localStorage.getItem("User")) {
             getTasks();
+        }
     }, []);
 
 

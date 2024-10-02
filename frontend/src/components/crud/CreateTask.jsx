@@ -63,7 +63,7 @@ const CreateTask = () => {
     }
 
     return (
-        <div className="w-full p-4 mt-3 flex flex-col items-center justify-center">
+        <div className="ml-44 md:ml-56 w-full p-4 mt-3 flex flex-col items-center justify-center">
             <div className="bg-white shadow-lg rounded-lg sm:w-[80%] w-[90%] mx-auto">
 
                 {/* Header */}

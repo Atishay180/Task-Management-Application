@@ -14,7 +14,7 @@ const Tasks = () => {
     const toDoTasks = tasks.filter(task => task.status === 'To Do').length;
 
     return (
-        <div className='flex flex-wrap justify-between px-8 py-4'>
+        <div className='ml-44 md:ml-56 flex flex-wrap justify-between px-8 py-4'>
             <div className="flex justify-around items-center rounded-lg border border-gray-100 w-full md:w-72 h-28 bg-white p-4 my-3 md:my-1 shadow-md transition hover:shadow-lg">
                 <div>
                     <h2 className='pb-1'>Total Tasks</h2>

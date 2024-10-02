@@ -24,7 +24,7 @@ const Navbar = () => {
         <div className='w-full flex justify-between items-center h-14 p-2 bg-white'>
 
             {/* search bar */}
-            <div className='p-2'>
+            <div className='p-2 ml-60'>
                 <form className='flex items-center gap-2'>
                     <input
                         type='text'

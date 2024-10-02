@@ -43,7 +43,7 @@ const ReadOnlyTask = () => {
   }
 
   return (
-    <div className='flex items-start justify-evenly flex-wrap h-screen overflow-y-auto'>
+    <div className='ml-44 md:ml-56 flex items-start justify-evenly flex-wrap h-screen overflow-y-auto'>
       {tasks &&
         tasks.length > 0 &&
         tasks.map((task, index) => (

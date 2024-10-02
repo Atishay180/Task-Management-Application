@@ -16,7 +16,7 @@ const Sidebar = () => {
     }
 
     return (
-        <div className="flex h-screen w-2/12 flex-col justify-between border-e bg-white">
+        <div className="fixed flex h-screen w-40 md:w-52 flex-col justify-between border-e bg-white">
             <div className="px-4 py-3">
                 <span className="grid h-10 w-full text-sm md:text-lg text-center font-bold place-content-center rounded-lg bg-gray-100 text-gray-600">
                     Task-Management

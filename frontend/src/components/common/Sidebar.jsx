@@ -18,7 +18,7 @@ const Sidebar = () => {
     return (
         <div className="flex h-screen w-2/12 flex-col justify-between border-e bg-white">
             <div className="px-4 py-3">
-                <span className="grid h-10 w-full md:text-lg text-center font-bold place-content-center rounded-lg bg-gray-100 text-gray-600">
+                <span className="grid h-10 w-full text-sm md:text-lg text-center font-bold place-content-center rounded-lg bg-gray-100 text-gray-600">
                     Task-Management
                 </span>
 
@@ -69,7 +69,7 @@ const Sidebar = () => {
                 <div className="flex flex-wrap items-center justify-center gap-2 bg-white p-4 hover:bg-gray-50">
 
                     {/* user info */}
-                    <FaUser className='text-3xl text-gray-700' />
+                    <FaUser className='text-xl text-gray-700' />
                     <p className="text-xs text-center lg:text-left">
                         <strong className="block font-medium">{authUser?.fullName}</strong>
 

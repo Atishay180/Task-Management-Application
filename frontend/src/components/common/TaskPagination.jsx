@@ -7,14 +7,11 @@ import TaskList from './TaskList';
 
 const TaskPagination = () => {
     const { filteredTasks, filterTasks, loading } = useFilterTasks();
-    const { selectedFilter, authUser } = useAuthContext();
-
+    const { selectedFilter } = useAuthContext();
     useEffect(() => {
-        if (authUser) {
-            filterTasks(selectedFilter);
-            setCurrentPage(1);
-        }
-    }, [selectedFilter, authUser]);
+        filterTasks(selectedFilter);
+        setCurrentPage(1);
+    }, [selectedFilter]);
 
     // Pagination
     const [currentPage, setCurrentPage] = useState(1);
